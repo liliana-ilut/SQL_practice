@@ -146,6 +146,43 @@ order by sum(amount) desc
 limit 5;
 
 
+---HAVING CLAUSE
+select customer_id, sum(amount) from payment
+-- where customer_id not in (184,87,477)
+group by customer_id
+having sum(amount) > 100;
+
+select store_id, count(customer_id) from customer
+group by store_id
+having count(customer_id) > 300;
+
+--Challenges with having clause
+--#1
+select customer_id, count(amount) from payment
+group by customer_id
+having count(amount) >= 40;
+
+--#2
+select customer_id, staff_id, sum(amount) from payment
+where staff_id = 2
+group by customer_id, staff_id
+having sum(amount) > 100;
+
+--- WHERE IS ALWAYS BEFORE GROUP BY
+--- HAVING IS ALWAYS AFTER GROUP BY
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
