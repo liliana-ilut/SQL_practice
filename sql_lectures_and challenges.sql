@@ -171,9 +171,30 @@ having sum(amount) > 100;
 --- WHERE IS ALWAYS BEFORE GROUP BY
 --- HAVING IS ALWAYS AFTER GROUP BY
 
+--JOINS
+--AS STATEMENT
+select amount as rental_price
+from payment;
+
+--You can only use the alias in the select statment, not in the where clause 
+select count(amount) as num_transactions
+from payment;
+
+select customer_id, sum(amount) as total_spent
+from payment
+group by customer_id
+having sum(amount) > 100;
+-- having total_spent > 100; --this is wrong, will give an error, since the total_spent is just an alias
 
 
+--JOINS
+--INNER JOINS -- takes the records from the inside that are the same
+--JOIN is equal to INNER JOIN
 
+select payment_id, payment.customer_id, first_name 
+from payment
+inner join customer
+on payment.customer_id = customer.customer_id;
 
 
 
