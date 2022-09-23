@@ -186,7 +186,7 @@ group by customer_id
 having sum(amount) > 100;
 -- having total_spent > 100; --this is wrong, will give an error, since the total_spent is just an alias
 
-
+--***************************
 --JOINS
 --INNER JOINS -- takes the records from the inside that are the same
 --JOIN is equal to INNER JOIN
@@ -195,6 +195,56 @@ select payment_id, payment.customer_id, first_name
 from payment
 inner join customer
 on payment.customer_id = customer.customer_id;
+
+--FULL OUTER JOINS
+select * from payment;
+select * from customer
+full outer join payment
+on customer.customer_id = payment.customer_id
+where customer.customer_id is null
+or payment.payment_id is null;
+--check your work-- check the count of rows for each table
+select count (distinct customer_id) from payment;
+
+--LEFT OUTER JOINS
+--order matters--it matters which is the left table
+select * from film;
+select * from inventory;
+
+select film.film_id, title, inventory_id, store_id
+from film
+left join inventory
+on inventory.film_id= film.film_id
+where inventory.film_id is null;
+
+--RIGHT OUTER JOINS
+--similar to the left join, just switching things around
+--UNION
+-- join challenges
+--#1 what is the email address of the customer from California
+select * from customer;
+select * from address;
+
+select email from customer
+join address
+on customer.address_id = address.address_id
+where district like 'California';
+--there are 9 results
+
+--#2
+select * from actor
+where first_name like 'Nick'
+and last_name like 'Wahlberg';
+
+
+select title, first_name, last_name from film
+join film_actor
+	on film.film_id = film_actor.film_id
+join actor
+	on actor.actor_id = film_actor.actor_id
+where film_actor.actor_id = 2;	
+
+
 
 
 
