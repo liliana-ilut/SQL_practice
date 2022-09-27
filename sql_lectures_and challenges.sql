@@ -269,6 +269,47 @@ select count (*) from payment where extract(dow from payment_date)= 1;
 select ROUND(rental_rate/replacement_cost,2)*100 as percent_cost from film;
 select 0.1 *replacement_cost as deposit from film;
 
+--strings
+select upper(first_name) || ' ' || upper(last_name) as full_name from customer;
+select lower(left(first_name,1)) || lower(last_name) || '@gmail.com' as custom_email from customer;
+
+--subquery
+select * from film;
+
+select title, rental_rate
+from film
+where rental_rate >
+(select avg(rental_rate) from film);
+
+select * from rental;
+select * from inventory;
+
+select film_id, title from film
+where film_id in
+(select inventory.film_id from rental
+inner join inventory
+on inventory.inventory_id = rental.inventory_id
+where return_date between '2005-05-29' and '2005-05-30')
+order by title;
+
+select first_name, last_name
+from customer as c
+where exists 
+(select * from payment as p
+where p.customer_id = c.customer_id
+and amount > 11);
+
+--SELF JOINS
+--find all pairs of film w/ the same lengt
+select f1.title, f2.title, f1.length  
+from film as f1
+inner join film as f2 
+on f1.film_id != f2.film_id
+and f1.length = f2.length
+
+
+
+
 
 
 
