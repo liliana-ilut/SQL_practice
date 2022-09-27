@@ -242,10 +242,32 @@ join film_actor
 	on film.film_id = film_actor.film_id
 join actor
 	on actor.actor_id = film_actor.actor_id
-where film_actor.actor_id = 2;	
+where first_name like 'Nick'
+and last_name like 'Wahlberg';	
+
+--TIMESTAMP
+show timezone;
+select now()
 
 
+--Timestamp and extract
+select extract(quarter from payment_date) as myyear from payment;
+select to_char(payment_date, 'dd-MM-YYYY') from payment;
 
+--challenge tasks:
+--#1 during which months did payments occur? format to return back full month name
+select extract (month from payment_date) from payment as months;
+select to_char(months, 'MM');
+
+select distinct(to_char(payment_date, 'MONTH')) from payment;
+
+--#2 how many payments occurred on a monday?
+
+select count (*) from payment where extract(dow from payment_date)= 1;
+
+--mathematical functions and operators
+select ROUND(rental_rate/replacement_cost,2)*100 as percent_cost from film;
+select 0.1 *replacement_cost as deposit from film;
 
 
 
